@@ -1,6 +1,7 @@
 import pandas
 
 vowels = "aeiou"
+nums = "0123456789"
 temp_list = []
 
 # last name
@@ -60,14 +61,20 @@ elif sex == "F" or sex == "f":
 
 while len(birth) > 8 or len(birth) < 8:
     birth = input("Date format not valid. When were you born? DDMMYYYY ")
+while int(birth[2:4]) > 12:
+    birth = input("Impossible month. When were you born? DDMMYYYY ")
+while int(birth[0:2]) > 31 or int(birth[0:2]) < 1:
+    birth = input("Impossible day. When were you born? DDMMYYYY ")
 cf_day += int(birth[0:2])
 cf_month = months[int(birth[2:4]) - 1]
 cf_year = birth[6:8]
 
 # city
-city = input("Where were you born? ").upper()
+city = input("Where were you born? If you were born outside of Italy, just type the country. ").upper()
 data = pandas.read_csv("city_codes.csv")
 cf_city = data[data.Ente_Denominazione == city].Codice
+while cf_city.to_string(index=False) == "Series([], )":
+    cf_city= input("Invalid birthplace. Where were you born? ")
 
 # control
 cf_data = cf_surname + cf_name + cf_year + cf_month + str(cf_day) + cf_city.to_string(index=False)
