@@ -2,7 +2,6 @@ import pandas
 from datetime import datetime
 
 vowels = "aeiou"
-nums = "0123456789"
 temp_list = []
 
 # last name
